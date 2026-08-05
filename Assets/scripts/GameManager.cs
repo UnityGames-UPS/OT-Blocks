@@ -275,6 +275,16 @@ public class GameManager : MonoBehaviour
         uiManager.LowBalPopup();
     }
 
+    internal void UpdateBalanceDisplay(double newBalance)
+    {
+        currentBalance = newBalance;
+        if (balance_text) balance_text.text = newBalance.ToString("f2");
+        if (currentBalance < currentTotalBet)
+        {
+            lowBalance();
+        }
+    }
+
     internal void updateBalance(double amount, bool add)
     {
         if (add)

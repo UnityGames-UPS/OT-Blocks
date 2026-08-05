@@ -90,4 +90,39 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private bool isForceMuted = false;
+    private bool preFocusMute_bg;
+    private bool preFocusMute_wl;
+    private bool preFocusMute_button;
+
+    // Focus-driven — called from both UiManager.OnFocusChanged (JS/WebGL path) and OnApplicationFocus below.
+    internal void SetMuteAll(bool forceMute)
+    {
+        if (forceMute == isForceMuted) return;
+        isForceMuted = forceMute;
+
+        if (forceMute)
+        {
+            preFocusMute_bg = bg_adudio.mute;
+            preFocusMute_wl = audioPlayer_wl.mute;
+            preFocusMute_button = audioPlayer_button.mute;
+
+            bg_adudio.mute = true;
+            audioPlayer_wl.mute = true;
+            audioPlayer_button.mute = true;
+        }
+        else
+        {
+            bg_adudio.mute = preFocusMute_bg;
+            audioPlayer_wl.mute = preFocusMute_wl;
+            audioPlayer_button.mute = preFocusMute_button;
+        }
+    }
+
+    // Native/editor focus path — calls the same method the WebGL OnFocusChanged path calls.
+    private void OnApplicationFocus(bool focus)
+    {
+        SetMuteAll(!focus);
+    }
+
 }
