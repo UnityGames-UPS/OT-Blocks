@@ -17,6 +17,13 @@ public class JSFunctCalls : MonoBehaviour
     RegisterDimensionsListener();
   }
 
+  internal void SendCustomMessage(string message)
+  {
+#if UNITY_WEBGL && !UNITY_EDITOR
+    SendPostMessage(message);
+#endif
+  }
+
   internal void RegisterVisibilityListener(string gameObjectName)
   {
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -24,13 +31,6 @@ public class JSFunctCalls : MonoBehaviour
     RegisterVisibilityChangeListener(gameObjectName);
 #else
     Debug.Log("[JS] Visibility listener not registered (editor mode)");
-#endif
-  }
-
-  internal void SendCustomMessage(string message)
-  {
-#if UNITY_WEBGL && !UNITY_EDITOR
-    SendPostMessage(message);
 #endif
   }
 

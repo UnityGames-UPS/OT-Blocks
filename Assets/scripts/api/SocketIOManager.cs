@@ -42,7 +42,7 @@ public class SocketIOManager : MonoBehaviour
   [SerializeField] internal JSFunctCalls JSManager;
   [SerializeField]
   private string testToken;
-  protected string gameID = "SL-WB";
+  protected string gameID = "OT-BLOCKS";
   //protected string gameID = "";
 
   internal bool isLoaded = false;
